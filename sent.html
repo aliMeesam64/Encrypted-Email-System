@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Sent Emails{% endblock %}
+{% block content %}
+<h2>Sent Emails</h2>
+<a href="{{ url_for('compose') }}" class="btn btn-primary mb-3">Compose New Email</a>
+
+{% if emails %}
+  <div class="list-group">
+    {% for email in emails %}
+      <a href="{{ url_for('view_email', email_id=email.id) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">To: {{ email.receiver_email }}</h5>
+          <small>{{ email.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+        </div>
+        <p class="mb-1 text-truncate" style="max-width: 600px;">
+          Encrypted Content Preview: {{ email.encrypted_message[:100] }}...
+        </p>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No sent emails.</p>
+{% endif %}
+{% endblock %}

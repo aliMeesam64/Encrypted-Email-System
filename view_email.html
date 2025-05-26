@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}View Email{% endblock %}
+
+{% block content %}
+<h2>Email Details</h2>
+
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <strong>From:</strong> {{ email.sender.username if email.sender else "Unknown" }}<br />
+      <strong>To:</strong> {{ email.receiver_email }}
+    </div>
+    <div>
+      <small>{{ email.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h5 class="card-title">Message</h5>
+    {% if decrypted_message %}
+      <pre class="card-text bg-light p-3 rounded" style="white-space: pre-wrap;">{{ decrypted_message }}</pre>
+    {% else %}
+      <p class="text-muted">[Message content is unavailable or could not be decrypted]</p>
+    {% endif %}
+  </div>
+</div>
+
+<a href="{{ url_for('inbox') }}" class="btn btn-secondary mt-3">Back to Inbox</a>
+{% endblock %}

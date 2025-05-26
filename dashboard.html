@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Welcome - Encrypted Email System{% endblock %}
+
+{% block content %}
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0062E6, #33AEFF);
+    color: #fff;
+  }
+
+  .welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    line-height: 1.4;
+  }
+
+  .btn-primary {
+    background-color: #0078FF;
+    border: none;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 12px 36px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0, 120, 255, 0.6);
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: #005FCC;
+  }
+
+  .btn-outline-light {
+    color: white;
+    border: 2px solid white;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 12px 36px;
+    border-radius: 30px;
+    margin-left: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .btn-outline-light:hover {
+    background-color: white;
+    color: #0078FF;
+  }
+
+  @media (max-width: 576px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary, .btn-outline-light {
+      font-size: 1rem;
+      padding: 10px 24px;
+      margin-left: 0;
+      margin-top: 10px;
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="welcome-container">
+  <h1>Welcome to the Encrypted Email System</h1>
+  <p class="subtitle">Securely send and receive encrypted emails with ease and privacy.</p>
+
+  {% if not current_user.is_authenticated %}
+    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+      <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+      <a href="{{ url_for('register') }}" class="btn btn-outline-light">Register</a>
+    </div>
+  {% else %}
+    <a href="{{ url_for('inbox') }}" class="btn btn-primary px-5">Go to Inbox</a>
+  {% endif %}
+</div>
+
+{% endblock %}

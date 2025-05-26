@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Welcome - Encrypted Email System{% endblock %}
+
+{% block content %}
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: url('/static/images/background-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+  .welcome-card-container {
+    display: flex;
+    background: rgb(121, 159, 218); 
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 56px); /* Adjust 56px if your navbar height differs */
+    padding: 1rem;
+  }
+  .welcome-card {
+    background: rgba(154, 185, 232, 0.7);  /* Adjust the card's opacity */
+    padding: 3rem 4rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    color: #fefefe;
+  }
+  .welcome-card h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .welcome-card p {
+    font-size: 1.25rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.85;
+  }
+  .welcome-card a.btn {
+    min-width: 130px;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  .welcome-card a.btn + a.btn {
+    margin-left: 1rem;
+  }
+</style>
+
+<div class="welcome-card-container">
+  <div class="welcome-card">
+    <h1>Welcome to the Encrypted Email System</h1>
+    <p>Securely send and receive encrypted emails with ease and privacy.</p>
+
+    {% if not current_user.is_authenticated %}
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+      <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+    {% else %}
+      <a href="{{ url_for('inbox') }}" class="btn btn-success">Go to Your Inbox</a>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your login form here -->
+        <form action="{{ url_for('login') }}" method="POST">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your registration form here -->
+        <form action="{{ url_for('register') }}" method="POST">
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Re-authentication{% endblock %}
+{% block content %}
+<h2>Confirm Your Password</h2>
+<p>For security, please enter your password again to access your Inbox.</p>
+
+<form method="POST" class="needs-validation" novalidate>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      name="password"
+      id="password"
+      class="form-control"
+      required
+      autocomplete="off"
+      autofocus
+    />
+    <div class="invalid-feedback">Please enter your password.</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Confirm</button>
+</form>
+
+<script>
+  // Bootstrap form validation script
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock %}

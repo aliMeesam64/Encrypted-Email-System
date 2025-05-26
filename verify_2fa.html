@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Two-Factor Authentication{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="mb-4 text-center">Two-Factor Authentication</h2>
+  <p>Please enter the 6-digit code sent to your email.</p>
+
+  <form method="POST" novalidate>
+    <div class="mb-3">
+      <label for="code" class="form-label">Authentication Code</label>
+      <input
+        type="text"
+        class="form-control"
+        id="code"
+        name="code"
+        maxlength="6"
+        pattern="\d{6}"
+        required
+        autofocus
+        autocomplete="one-time-code"
+        placeholder="Enter 6-digit code"
+      />
+      <div class="invalid-feedback">
+        Please enter the 6-digit code sent to your email.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Verify</button>
+  </form>
+
+  <div class="mt-3 text-center">
+    <a href="{{ url_for('login') }}">Back to Login</a>
+  </div>
+</div>
+
+<script>
+// Bootstrap form validation for the code input
+(() => {
+  'use strict';
+  const form = document.querySelector('form');
+  form.addEventListener('submit', event => {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  }, false);
+})();
+</script>
+{% endblock %}

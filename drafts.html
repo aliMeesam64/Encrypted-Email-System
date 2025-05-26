@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Drafts{% endblock %}
+{% block content %}
+<h2>Draft Emails</h2>
+<a href="{{ url_for('compose') }}" class="btn btn-secondary mb-3">Compose New Email</a>
+
+{% if drafts %}
+  <div class="list-group">
+    {% for draft in drafts %}
+      <a href="{{ url_for('view_email', email_id=draft.id) }}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">To: {{ draft.receiver_email or "No Receiver" }}</h5>
+          <small>{{ draft.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+        </div>
+        <p class="mb-1 text-truncate" style="max-width: 600px;">
+          {% if draft.encrypted_message %}
+            Encrypted Content Preview: {{ draft.encrypted_message[:100] }}...
+          {% else %}
+            (No content)
+          {% endif %}
+        </p>
+      </a>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No drafts saved.</p>
+{% endif %}
+{% endblock %}
+  

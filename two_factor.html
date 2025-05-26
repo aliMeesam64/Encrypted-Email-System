@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Two-Factor Authentication{% endblock %}
+{% block content %}
+<h2>Two-Factor Authentication</h2>
+<p>Please enter the 6-digit code from your authenticator app.</p>
+
+<form method="POST" class="needs-validation" novalidate>
+  <div class="mb-3">
+    <label for="token" class="form-label">Authentication Code</label>
+    <input type="text" name="token" id="token" class="form-control" required pattern="\d{6}" maxlength="6" />
+    <div class="invalid-feedback">Enter a valid 6-digit code.</div>
+  </div>
+  <button type="submit" class="btn btn-primary">Verify</button>
+</form>
+
+<p class="mt-3">Set up your 2FA using this QR code in your app:</p>
+<img src="https://api.qrserver.com/v1/create-qr-code/?data={{ totp_uri | urlencode }}&size=200x200" alt="QR Code for 2FA" />
+{% endblock %}
